@@ -13,13 +13,4 @@
       <PackageReference Include="Twilio.AspNet.Core" Version="5.33.1" />
     </ItemGroup>
 
-
-    <ItemGroup>
-      <Content Include="measure.py">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
-
 </Project>

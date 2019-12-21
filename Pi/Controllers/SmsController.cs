@@ -46,6 +46,7 @@ namespace Pi.Controllers
                 catch (Exception e)
                 {
                     Log.Error(e, "Pi.Controllers.SmsController.Index");
+                    Console.WriteLine($"Pi.Controllers.SmsController.Index: {e.InnerException}");
                     messagingResponse.Message($"{e.Message.Substring(0, 160)}");
                 }
             }

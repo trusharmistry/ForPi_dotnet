@@ -21,10 +21,12 @@ namespace Pi
             try
             {
                 Log.Information("Starting up");
+                Console.WriteLine("Starting up");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Application start-up failed. {ex.Message}");
                 Log.Fatal(ex, "Application start-up failed");
             }
             finally
