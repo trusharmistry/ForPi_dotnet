@@ -21,7 +21,7 @@ namespace Pi
             Log.Information($"GPIO echoPin enabled for use: {_echoPin}");
 
             _gpio.SetPinMode(_triggerPin, PinMode.Output);
-            _gpio.SetPinMode(_echoPin, PinMode.Output);
+            _gpio.SetPinMode(_echoPin, PinMode.Input);
 
             _gpio.Write(_triggerPin, PinValue.Low);
         }
