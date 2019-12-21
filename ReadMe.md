@@ -1,45 +1,45 @@
 ## Raspberry Pi 4
 
  - Install Raspbian using NOOBs OS (takes a while after 100% completion).
- - Enable VCN [youtube](https://www.youtube.com/watch?v=YP3_gvHZhfw) or [link](https://howtoraspberrypi.com/raspberry-pi-vnc/) for your Pi
+ - Enable VCN [youtube](https://www.youtube.com/watch?v=YP3_gvHZhfw) or [link](https://howtoraspberrypi.com/raspberry-pi-vnc/) for your Pi:
    ```
    # run the command 
    sudo raspi-config
-   # select the line Interfacing Options, then line VNC, 
-   # and finally answer that you want to enable VNC
+   # select the line `Interfacing Options`, then line `VNC`, 
+   # and finally answer that you want to enable `VNC`
    ```
  - Connect all the components see [diagram](https://tutorials-raspberrypi.de/wp-content/uploads/2014/05/ultraschall_Steckplatine.png)
- - Install Docker on the Pi see instructions [here](https://linuxize.com/post/how-to-install-and-use-docker-on-raspberry-pi/)
- - Pull [this](https://github.com/iamtrushar/ForPi) git repo
+ - Install **Docker** on the Pi see instructions [here](https://linuxize.com/post/how-to-install-and-use-docker-on-raspberry-pi/)
+ - Pull [this](https://github.com/trusharmistry/ForPi_dotnet) git repo:
+   ```
+   git clone https://github.com/trusharmistry/ForPi_dotnet
+   ```
  - We will be using the following two services to get this going:
     
    - *ngrok*
      Open an [account](https://ngrok.com). Free for single use.
-     Login the ngrok site and you will see the dashboard page.
-     The ngrok file is already added to the git repo so no need to download it agian.
+     Login the ngrok site and will be naviagted to the dashboard page.
      Note down the *token* show as "step 3" on the dashboard page.
+     (The ngrok executable file (see folder ngrok-stable-linux-arm) is added to this git repo so no need to download it agian)
    
     - *Twilio*
-     Open an [account](https://https://www.twilio.com) if you don't have one
-     Purchase a sms-phone number.
+     Open an [account](https://https://www.twilio.com) if you don't have one.
+     Purchase a sms-phone number ($1 per year fee + sms [charges](https://support.twilio.com/hc/en-us/articles/223134687-How-Twilio-charges-for-Short-Code-messages)).
      
  - Build & run the docker container: 
    ```
-   #Build
+   # build
    docker build -t pi .
-   #Run (use --privileged to avoid dev/mem error when accessing RPi.GPIO hardware)
+   # run (use --privileged to avoid dev/mem error when accessing RPi.GPIO hardware)
    docker run -d --privileged --restart always -p 5000:80 --name forpi pi
    ```
 
  - Start ngrok server:
-   
    ```
    # naviate to ForPi/Pi/ngrok-stable-linux-arm folder
    ./ngrok authtoken <YourAuthenticationTokenFromNgrok>
    
    # start the server
-   ./ngrok http 80 
-   # if you run in Bad Gateway 502 then try the following:
    ./ngrok http 127.0.0.1:5000
    
    # This should show a unique http and https address which 
@@ -50,7 +50,7 @@
    # - Log into Twilio.com and go to the Console's Numbers page.
    # - Click on your SMS-enabled phone number.
    # - Find the Messaging section. The default “CONFIGURE WITH” is what you’ll need: "Webhooks, TwiML, [etc.]".
-   # - In the “A MESSAGE COMES IN” section, select "Webhook" and paste in your URL: in this quickstart step above, it would be: https://354f5b25.ngrok.io/sms - be sure to add /sms at the end, as this is the route to your SmsController class.
+   # - In the “A MESSAGE COMES IN” section, select "Webhook" and paste in your URL: in this quickstart step above, it would be: https://123454abc.ngrok.io/sms - be sure to add `/sms` at the end, as this is the route to the SmsController class.
    ```
 
 -------
