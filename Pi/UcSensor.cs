@@ -2,29 +2,29 @@ using System;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
+
 using Serilog;
 
 namespace Pi
 {
-    public class UcSensor:IDisposable
+    public class UcSensor : IDisposable
     {
-
+        
         public UcSensor(int triggerPin, int echoPin)
         {
-            _gpio = new GpioController();
-            _triggerPin = triggerPin;
-            _echoPin = echoPin;
-            
-            _gpio.OpenPin(_triggerPin);
-            Log.Information($"GPIO triggerPin enabled for use: {_triggerPin}");
-            _gpio.OpenPin(_echoPin);
-            Log.Information($"GPIO echoPin enabled for use: {_echoPin}");
+            Gpio = new GpioController();
+            TriggerPin = triggerPin;
+            EchoPin = echoPin;
 
-            _gpio.SetPinMode(_triggerPin, PinMode.Output);
-            _gpio.SetPinMode(_echoPin, PinMode.Input);
+            Gpio.OpenPin(TriggerPin);
+            Gpio.OpenPin(EchoPin);
 
-            _gpio.Write(_triggerPin, PinValue.Low);
+            Gpio.SetPinMode(TriggerPin, PinMode.Output);
+            Gpio.SetPinMode(EchoPin, PinMode.Input);
+
+            Gpio.Write(TriggerPin, PinValue.Low);
         }
+        
 
         public double GetDistance()
         {
@@ -33,39 +33,45 @@ namespace Pi
             var pulseLength = new Stopwatch();
 
             // send pulse
-            _gpio.Write(_triggerPin, PinValue.High);
+            Gpio.Write(TriggerPin, PinValue.High);
             mre.WaitOne(TimeSpan.FromMilliseconds(0.01));
-            _gpio.Write(_triggerPin, PinValue.Low);
+            Gpio.Write(TriggerPin, PinValue.Low);
 
             // receive pulse
-            while (_gpio.Read(_echoPin) == PinValue.Low)
+            while (Gpio.Read(EchoPin) == PinValue.Low)
             {
+                // no op
             }
+
             pulseLength.Start();
 
 
-            while (_gpio.Read(_echoPin) == PinValue.High)
+            while (Gpio.Read(EchoPin) == PinValue.High)
             {
+                // no op
             }
+
             pulseLength.Stop();
 
-            //Calculating distance
+            // calculating distance
             var timeBetween = pulseLength.Elapsed;
             Debug.WriteLine(timeBetween.ToString());
             var distance = timeBetween.TotalSeconds * 17000;
 
             return distance;
         }
+        
 
         public void Dispose()
         {
-            Log.Information($"Disposing GPIO instance.");
-            _gpio?.Dispose();
-            Log.Information($"Disposed GPIO instance.");
+            Gpio?.Dispose();
+            Log.Information("Disposed the `_gpio` instance.");
         }
+
         
-        private readonly GpioController _gpio;
-        private readonly int _triggerPin;
-        private readonly int _echoPin;
+        private GpioController Gpio { get; }
+        private int TriggerPin { get; }
+        private int EchoPin { get; }
+        
     }
 }

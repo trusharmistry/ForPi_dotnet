@@ -8,6 +8,7 @@ namespace Pi
 {
     public class Program
     {
+        
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -35,9 +36,11 @@ namespace Pi
             }
         }
 
+        
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        
     }
 }

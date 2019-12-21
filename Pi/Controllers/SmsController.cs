@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Twilio.AspNet.Common;
@@ -10,8 +9,7 @@ namespace Pi.Controllers
 {
     public class SmsController : TwilioController
     {
-        private IConfiguration Configuration { get; }
-
+        
         public SmsController(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -57,5 +55,9 @@ namespace Pi.Controllers
 
             return TwiML(messagingResponse);
         }
+        
+        
+        private IConfiguration Configuration { get; }
+        
     }
 }
