@@ -14,7 +14,7 @@
    ```
    git clone https://github.com/trusharmistry/ForPi_dotnet
    ```
- - We will be using the following two services to get this going:
+ - We will be using the following two services to a. make our asp.net app publicly visible and be able to respond to sms:
     
    - *ngrok*
      Open an [account](https://ngrok.com). Free for single use.
@@ -26,7 +26,7 @@
      Open an [account](https://https://www.twilio.com) if you don't have one.
      Purchase a sms-phone number ($1 per year fee + sms [charges](https://support.twilio.com/hc/en-us/articles/223134687-How-Twilio-charges-for-Short-Code-messages)).
      
- - Build & run the docker container: 
+ - Build & run the **docker** container: 
    ```
    # build
    docker build -t pi .
@@ -34,7 +34,7 @@
    docker run -d --privileged --restart always -p 5000:80 --name forpi pi
    ```
 
- - Start ngrok server:
+ - Start **ngrok** server:
    ```
    # naviate to ForPi/Pi/ngrok-stable-linux-arm folder
    ./ngrok authtoken <YourAuthenticationTokenFromNgrok>
