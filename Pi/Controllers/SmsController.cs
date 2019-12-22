@@ -34,7 +34,10 @@ namespace Pi.Controllers
             {
                 try
                 {
-                    var distMeasuredBySensor = new UcSensor( triggerPin:18, echoPin:24).GetDistance();
+                    var distMeasuredBySensor = new UcSensor(
+                        triggerPin: 18,
+                        echoPin: 24)
+                        .GetDistance();
                     var res = distMeasuredBySensor < minDistInCm
                         ? $"Garage door is Open! Distance measured from Pi to Door: {distMeasuredBySensor}cm"
                         : $"Garage door is Closed! Distance measured from Pi to Door: {distMeasuredBySensor}cm";
@@ -44,13 +47,12 @@ namespace Pi.Controllers
                 catch (Exception e)
                 {
                     Log.Error(e, "Pi.Controllers.SmsController.Index");
-                    Console.WriteLine($"Pi.Controllers.SmsController.Index: {e.InnerException}");
                     messagingResponse.Message($"{e.Message.Substring(0, 160)}");
                 }
             }
             else
             {
-                messagingResponse.Message("Just ask for STATUS.");
+                messagingResponse.Message("Just ask: STATUS.");
             }
 
             return TwiML(messagingResponse);
