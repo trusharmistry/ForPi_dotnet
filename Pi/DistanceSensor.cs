@@ -7,10 +7,14 @@ using Serilog;
 
 namespace Pi
 {
-    public class UcSensor : IDisposable
+    public class DistanceSensor : IDisposable
     {
-        
-        public UcSensor(int triggerPin, int echoPin)
+        /// <summary>
+        /// Ctor to init GpioController. It opens and set in/out pins of the Gpio board. 
+        /// </summary>
+        /// <param name="triggerPin">Pin number to send ultra sonic wave.</param>
+        /// <param name="echoPin">Pin number to receive the reflection.</param>
+        public DistanceSensor(int triggerPin, int echoPin)
         {
             Gpio = new GpioController();
             TriggerPin = triggerPin;
@@ -23,18 +27,22 @@ namespace Pi
             Gpio.SetPinMode(EchoPin, PinMode.Input);
 
             Gpio.Write(TriggerPin, PinValue.Low);
+            Log.Debug("Init `Gpio`.");
         }
         
 
-        public double GetDistance()
+        /// <summary>
+        /// Measure distance in cm.
+        /// </summary>
+        public double Measure()
         {
-            var mre = new ManualResetEvent(false);
-            mre.WaitOne(500);
+            var manualResetEvent = new ManualResetEvent(initialState: false);
+            manualResetEvent.WaitOne(500);
             var pulseLength = new Stopwatch();
 
             // send pulse
             Gpio.Write(TriggerPin, PinValue.High);
-            mre.WaitOne(TimeSpan.FromMilliseconds(0.01));
+            manualResetEvent.WaitOne(TimeSpan.FromMilliseconds(0.01));
             Gpio.Write(TriggerPin, PinValue.Low);
 
             // receive pulse
@@ -55,17 +63,17 @@ namespace Pi
 
             // calculating distance
             var timeBetween = pulseLength.Elapsed;
-            Debug.WriteLine(timeBetween.ToString());
             var distance = timeBetween.TotalSeconds * 17000;
-
+            Log.Debug($"Time elapsed: {timeBetween.ToString()}. Distance measured: {distance}cm.");
             return distance;
         }
         
-
+        
+        /// <inheritdoc/>
         public void Dispose()
         {
             Gpio?.Dispose();
-            Log.Information("Disposed the `_gpio` instance.");
+            Log.Debug("Disposed the `Gpio` instance.");
         }
 
         
