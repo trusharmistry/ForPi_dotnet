@@ -27,6 +27,7 @@ namespace Pi.Controllers
 
             if (!double.TryParse(Configuration.GetSection("Distance:Minimum").Value, out var minDistInCm))
             {
+                Log.Debug("Unable to parse minimum distance in configuration. Using 30cm as default.");
                 minDistInCm = 30.0;
             }
 

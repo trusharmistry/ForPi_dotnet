@@ -6,7 +6,7 @@ using Serilog.Events;
 
 namespace Pi
 {
-    public class Program
+    public static class Program
     {
         
         public static void Main(string[] args)
@@ -36,8 +36,8 @@ namespace Pi
             }
         }
 
-        
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
