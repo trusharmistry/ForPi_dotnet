@@ -7,46 +7,38 @@ using Serilog;
 
 namespace Pi
 {
-    public class DistanceSensor : IDisposable
+    
+    internal static class DistanceSensor
     {
+        
         /// <summary>
-        /// Ctor to init GpioController. It opens and set in/out pins of the Gpio board. 
+        /// Init GpioController to open/set the in/out pins of the Gpio
+        /// board and get measurement in cm. 
         /// </summary>
         /// <param name="triggerPin">Pin number to send ultra sonic wave.</param>
         /// <param name="echoPin">Pin number to receive the reflection.</param>
-        public DistanceSensor(int triggerPin, int echoPin)
+        public static double Measure(int triggerPin, int echoPin)
         {
-            Gpio = new GpioController();
-            TriggerPin = triggerPin;
-            EchoPin = echoPin;
+            using var gpio = new GpioController();
+            gpio.OpenPin(triggerPin);
+            gpio.OpenPin(echoPin);
 
-            Gpio.OpenPin(TriggerPin);
-            Gpio.OpenPin(EchoPin);
+            gpio.SetPinMode(triggerPin, PinMode.Output);
+            gpio.SetPinMode(echoPin, PinMode.Input);
 
-            Gpio.SetPinMode(TriggerPin, PinMode.Output);
-            Gpio.SetPinMode(EchoPin, PinMode.Input);
+            gpio.Write(triggerPin, PinValue.Low);
 
-            Gpio.Write(TriggerPin, PinValue.Low);
-            Log.Debug("Init `Gpio`.");
-        }
-        
-
-        /// <summary>
-        /// Measure distance in cm.
-        /// </summary>
-        public double Measure()
-        {
             var manualResetEvent = new ManualResetEvent(initialState: false);
             manualResetEvent.WaitOne(500);
             var pulseLength = new Stopwatch();
 
             // send pulse
-            Gpio.Write(TriggerPin, PinValue.High);
+            gpio.Write(triggerPin, PinValue.High);
             manualResetEvent.WaitOne(TimeSpan.FromMilliseconds(0.01));
-            Gpio.Write(TriggerPin, PinValue.Low);
+            gpio.Write(triggerPin, PinValue.Low);
 
             // receive pulse
-            while (Gpio.Read(EchoPin) == PinValue.Low)
+            while (gpio.Read(echoPin) == PinValue.Low)
             {
                 // no op
             }
@@ -54,7 +46,7 @@ namespace Pi
             pulseLength.Start();
 
 
-            while (Gpio.Read(EchoPin) == PinValue.High)
+            while (gpio.Read(echoPin) == PinValue.High)
             {
                 // no op
             }
@@ -65,21 +57,10 @@ namespace Pi
             var timeBetween = pulseLength.Elapsed;
             var distance = timeBetween.TotalSeconds * 17000;
             Log.Debug($"Time elapsed: {timeBetween.ToString()}. Distance measured: {distance}cm.");
+
             return distance;
         }
         
-        
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            Gpio?.Dispose();
-            Log.Debug("Disposed the `Gpio` instance.");
-        }
-
-        
-        private GpioController Gpio { get; }
-        private int TriggerPin { get; }
-        private int EchoPin { get; }
-        
     }
+    
 }

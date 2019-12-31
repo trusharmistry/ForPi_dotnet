@@ -45,10 +45,7 @@ namespace Pi.Controllers
             {
                 try
                 {
-                    var distMeasuredBySensor = new DistanceSensor(
-                        triggerPin: 18,
-                        echoPin: 24)
-                        .Measure();
+                    var distMeasuredBySensor = DistanceSensor.Measure(triggerPin: 18, echoPin: 24);
                     var res = distMeasuredBySensor < minDistInCm
                         ? $"Garage door is Open! Distance measured from Pi to Door: {distMeasuredBySensor}cm"
                         : $"Garage door is Closed! Distance measured from Pi to Door: {distMeasuredBySensor}cm";
