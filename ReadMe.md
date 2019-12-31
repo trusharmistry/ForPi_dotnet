@@ -51,7 +51,7 @@ Hardware used (not a minimum requirement)
    # build
    docker build -t pi .
    
-   # run (use --privileged to avoid dev/mem error when accessing RPi.GPIO hardware)
+   # run (TBD: using --privileged flag to avoid dev/mem error when accessing RPi.GPIO hardware and I am currently too lazy to figure out how to specifically permit docker container to access dev/mem director.)
    docker run -d --privileged --restart always -p 5000:80 --name forpi pi
    ```
 
@@ -72,7 +72,11 @@ Hardware used (not a minimum requirement)
    # - Click on your SMS-enabled phone number.
    # - Find the Messaging section. The default “CONFIGURE WITH” is what you’ll need: "Webhooks, TwiML, [etc.]".
    # - In the “A MESSAGE COMES IN” section, select "Webhook" and paste in your URL: in this quickstart step above, it would be: https://123454abc.ngrok.io/sms - be sure to add `/sms` at the end, as this is the route to the SmsController class.
+   
+   
+   # NOTE: when Pi goes down or restarted, the above process has to be repeated i.e. restart ngrok server and update twilio account with new address (TBD: find a way to automate this)   
    ```
+
 
 ---
 
