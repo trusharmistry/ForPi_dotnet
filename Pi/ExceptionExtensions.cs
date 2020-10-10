@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace Atom.Common
+namespace Pi
 {
     /// <summary>
     /// Exception extensions.

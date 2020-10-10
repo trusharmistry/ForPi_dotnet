@@ -14,7 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Atom.Common\Atom.Common.csproj" />
       <ProjectReference Include="..\Pi\Pi.csproj" />
     </ItemGroup>
 
