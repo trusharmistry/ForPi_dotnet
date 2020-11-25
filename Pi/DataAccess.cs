@@ -92,9 +92,9 @@ namespace Pi
         /// </summary>
         private static readonly SqlConnectionStringBuilder SqlConnectionStringBuilder = new SqlConnectionStringBuilder
         {
-            DataSource = "192.168.86.160",
-            UserID = "pi",
-            Password = "yourStrong@password",
+            DataSource = "192.168.86.44",
+            UserID = "sa",
+            Password = "<YourStrong@Passw0rd>",
             InitialCatalog = "pi"
         };
     }
