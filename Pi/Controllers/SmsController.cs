@@ -1,7 +1,5 @@
 using System;
-
 using Microsoft.Extensions.Configuration;
-
 using Serilog;
 using Twilio.AspNet.Common;
 using Twilio.AspNet.Core;
@@ -11,7 +9,6 @@ namespace Pi.Controllers
 {
     public class SmsController : TwilioController
     {
-        
         /// <summary>
         /// ctor
         /// </summary>
@@ -27,11 +24,11 @@ namespace Pi.Controllers
         /// </summary>
         public TwiMLResult Index(SmsRequest incomingMessage)
         {
-            Log.Debug($"Sms request message: {incomingMessage}"); 
+            Log.Debug($"Sms request message: {incomingMessage}");
             var messagingResponse = new MessagingResponse();
             if (string.IsNullOrEmpty(incomingMessage.Body))
             {
-                messagingResponse.Message("Just ask for `status`"); 
+                messagingResponse.Message("Just ask for `status`");
                 return TwiML(messagingResponse);
             }
 
@@ -46,8 +43,8 @@ namespace Pi.Controllers
                 try
                 {
                     var distMeasuredBySensor = new DistanceSensor(
-                        triggerPin: 18,
-                        echoPin: 24)
+                            triggerPin: 18,
+                            echoPin: 24)
                         .Measure();
                     var res = distMeasuredBySensor < minDistInCm
                         ? $"Garage door is Open! Distance measured from Pi to Door: {distMeasuredBySensor}cm"
@@ -68,9 +65,8 @@ namespace Pi.Controllers
 
             return TwiML(messagingResponse);
         }
-        
-        
+
+
         private IConfiguration Configuration { get; }
-        
     }
 }
