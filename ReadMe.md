@@ -9,15 +9,16 @@
    # and finally answer that you want to enable `VNC`
    ```
  - Optional set remote desktop resolution
+   ```
    # run the command
    sudo nano /boot/config.txt
-   Uncomment the following lines
-   ```
+   
+   # Uncomment the following lines in config.txt
    framebuffer_width=1900
    framebuffer_height=1024
-   ```
-   Comment the follwoing lines (if they are uncommented)
-   ```
+  
+   # Comment the follwoing lines (if they are uncommented)
+   
    #dtoverlay=vc4-kms-v3d
    #max_framebuffers=2
    ```
