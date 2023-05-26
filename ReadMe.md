@@ -8,6 +8,20 @@
    # select the line `Interfacing Options`, then line `VNC`, 
    # and finally answer that you want to enable `VNC`
    ```
+ - Optional set remote desktop resolution
+   # run the command
+   sudo nano /boot/config.txt
+   Uncomment the following lines
+   ```
+   framebuffer_width=1900
+   framebuffer_height=1024
+   ```
+   Comment the follwoing lines (if they are uncommented)
+   ```
+   #dtoverlay=vc4-kms-v3d
+   #max_framebuffers=2
+   ```
+   
  - Connect all the components see [diagram](https://tutorials-raspberrypi.de/wp-content/uploads/2014/05/ultraschall_Steckplatine.png)
  - Install **Docker** on the Pi see instructions [here](https://linuxize.com/post/how-to-install-and-use-docker-on-raspberry-pi/)
  - Pull [this](https://github.com/trusharmistry/ForPi_dotnet) git repo:
