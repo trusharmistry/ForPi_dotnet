@@ -1,3 +1,27 @@
+## Install docker
+`curl -sSL https://get.docker.com | sh`
+
+
+## Install dotnet
+`curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel STS`
+
+
+## Install dotnet-outdated-tool
+`dotnet tool install --global dotnet-outdated-tool`
+
+Tools directory '/home/pi/.dotnet/tools' is not currently on the PATH environment variable.
+If you are using bash, you can add it to your profile by running the following command:
+
+cat << \EOF >> ~/.bash_profile
+# Add .NET Core SDK tools
+export PATH="$PATH:/home/pi/.dotnet/tools"
+EOF
+
+You can add it to the current session by running the following command:
+
+export PATH="$PATH:/home/pi/.dotnet/tools"
+
+
 ## Raspberry Pi 4
 
  - Install Raspbian using NOOBs OS (takes a while after 100% completion).
