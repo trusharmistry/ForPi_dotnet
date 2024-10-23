@@ -110,4 +110,22 @@ export PATH="$PATH:/home/pi/.dotnet/tools"
   ```
   docker logs --tail 50 --follow --timestamps forPi
   ```
+  
+-------
+- git credential manager https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md
+  ```
+  #Install
 
+dotnet tool install -g git-credential-manager
+git-credential-manager configure
+
+#Update
+dotnet tool update -g git-credential-manager
+
+#Uninstall
+git-credential-manager unconfigure
+dotnet tool uninstall -g git-credential-manager
+
+#add to path
+export PATH="$PATH:/home/pi/.dotnet/tools"
+```
