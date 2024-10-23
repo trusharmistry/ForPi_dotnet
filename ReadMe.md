@@ -104,3 +104,10 @@ export PATH="$PATH:/home/pi/.dotnet/tools"
   ```
   docker run -d --name seq-server --restart always -e "ACCEPT_EULA=Y" -p 5341:80 datalust/seq:latest;
   ```
+
+-------
+- Get logs for image
+  ```
+  docker logs --tail 50 --follow --timestamps forPi
+  ```
+
